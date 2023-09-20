@@ -14,7 +14,7 @@ class InstanceController extends Controller
             return (object) ApiWhatsApp::get('/instance/list')->json();
         } catch (\Exception $ex) {
             RetornWhat::create(['message' => $ex->getMessage(), 'type' => 'error']);
-            return response()->json(['error' => true, 'message' => $ex], 401);
+            return response()->json(['error' => true, 'message' => $ex->getMessage()], 401);
         }
     }
 
