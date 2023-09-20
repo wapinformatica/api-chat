@@ -1,19 +1,25 @@
 <?php
 
-use Illuminate\Http\Request;
+use App\Http\Controllers\InstanceController;
+use App\Http\Controllers\LoginController;
+use App\Http\Controllers\MessageController;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
-/*
-|--------------------------------------------------------------------------
-| API Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register API routes for your application. These
-| routes are loaded by the RouteServiceProvider and all of them will
-| be assigned to the "api" middleware group. Make something great!
-|
-*/
+Route::post('/login',[LoginController::class, 'login'])->name('login.login');
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
+Route::middleware('auth:sanctum')->group(function () {
+    Route::get('/user',[UserController::class, 'edit'])->name('user.edit');
+
+    Route::prefix('message')->group(function() {
+        Route::post('/text', [MessageController::class, 'text'])->name('message.text');
+        Route::post('/image', [MessageController::class, 'image'])->name('message.image');
+    });
+    Route::prefix('instance')->group(function() {
+        Route::get('/', [InstanceController::class, 'index'])->name('instance.index');
+        Route::get('/restore', [InstanceController::class, 'restore'])->name('instance.restore');
+        Route::delete('/delete/{key_name}', [InstanceController::class, 'delete'])->name('instance.delete');
+        Route::delete('/logout/{key_name}', [InstanceController::class, 'logout'])->name('instance.logout');
+    });
+
 });
