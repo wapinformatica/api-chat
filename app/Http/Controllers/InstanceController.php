@@ -66,6 +66,14 @@ class InstanceController extends Controller
         }
     }
 
-
+    public function init($key_name)
+    {
+        try{
+            return ApiWhatsApp::get('/instance/init?key='.$key_name.'&token='.env('TOKEN_WHATSAPP'))->json();
+        } catch (\Exception $ex) {
+            RetornWhat::create(['message' => $ex->getMessage(), 'type' => 'error']);
+            return response()->json(['error' => true, 'message' => $ex], 401);
+        }
+    }
 
 }
