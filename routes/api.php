@@ -7,7 +7,7 @@ use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
 Route::post('/login',[LoginController::class, 'login'])->name('login.login');
-Route::get('/', function () {
+Route::get('/home', function () {
     return view('welcome');
 });
 
