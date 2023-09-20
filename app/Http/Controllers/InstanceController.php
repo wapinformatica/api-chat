@@ -30,7 +30,7 @@ class InstanceController extends Controller
             return response()->json(['error' => false, 'message' => 'Restaurada com sucesso.'], 200);
         } catch (\Exception $ex) {
             RetornWhat::create(['message' => $ex->getMessage(), 'type' => 'error']);
-            return response()->json(['error' => true, 'message' => $ex], 401);
+            return response()->json(['error' => true, 'message' => $ex->getMessage()], 401);
         }
     }
 
@@ -46,7 +46,7 @@ class InstanceController extends Controller
             return response()->json(['error' => false, 'message' => 'Desconectado com sucesso.'], 200);
         } catch (\Exception $ex) {
             RetornWhat::create(['message' => $ex->getMessage(), 'type' => 'error']);
-            return response()->json(['error' => true, 'message' => $ex], 401);
+            return response()->json(['error' => true, 'message' => $ex->getMessage()], 401);
         }
     }
 
@@ -62,7 +62,7 @@ class InstanceController extends Controller
             return response()->json(['error' => false, 'message' => 'Deletado com sucesso.'], 200);
         } catch (\Exception $ex) {
             RetornWhat::create(['message' => $ex->getMessage(), 'type' => 'error']);
-            return response()->json(['error' => true, 'message' => $ex], 401);
+            return response()->json(['error' => true, 'message' => $ex->getMessage()], 401);
         }
     }
 
@@ -72,7 +72,7 @@ class InstanceController extends Controller
             return ApiWhatsApp::get('/instance/init?key='.$key_name.'&token='.env('TOKEN_WHATSAPP'))->json();
         } catch (\Exception $ex) {
             RetornWhat::create(['message' => $ex->getMessage(), 'type' => 'error']);
-            return response()->json(['error' => true, 'message' => $ex], 401);
+            return response()->json(['error' => true, 'message' => $ex->getMessage()], 401);
         }
     }
 
