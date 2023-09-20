@@ -7,6 +7,9 @@ use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
 Route::post('/login',[LoginController::class, 'login'])->name('login.login');
+Route::get('/', function () {
+    return view('welcome');
+});
 
 Route::middleware('auth:sanctum')->group(function () {
     Route::get('/user',[UserController::class, 'edit'])->name('user.edit');
