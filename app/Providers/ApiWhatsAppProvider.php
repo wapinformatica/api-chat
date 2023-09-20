@@ -12,9 +12,9 @@ class ApiWhatsAppProvider extends ServiceProvider
         $this->app->bind('api-whatsapp', function(){
             return Http::withOptions([
                 'verify' => false,
-                'base_uri' => env('URL_WHATSAPP')
+                'base_uri' => env('URL_WHATSAPP').'/'
             ])->withHeaders([
-                'Authorization' => 'Bearer ',
+                'Content-Type: application/json'
             ]);
         });
     }
