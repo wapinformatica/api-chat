@@ -87,6 +87,25 @@ class MessageController extends Controller
         }
     }
 
+    public function texto(TextRequest $request)
+    {
+        try{
+            $phone = $this->validPhone($request->telefone);
+            $result = (object) ApiWhatsApp::post('/message/text?key='.$request->key_name,[
+                'id' => $phone,
+                'message' => $request->mensagem
+            ])->json();
+            if($result){
+                RetornWhat::create(['message' => $result, 'type' => 'error']);
+                return response()->json(['error' => true, 'message' => 'Houve uma falha no envia da mensagem.'], 401);
+            }
+            return response()->json(['error' => false, 'message' => 'Mensagem enviada com sucesso.'], 201);
+        } catch (\Exception $ex) {
+            RetornWhat::create(['message' => $ex->getMessage(), 'type' => 'error']);
+            return response()->json(['error' => true, 'message' => $ex], 401);
+        }
+    }
+
     private function validPhone($phone){
         try {
             $key_phone = preg_replace('/[^0-9]/', '', $phone);
