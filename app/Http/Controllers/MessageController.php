@@ -5,7 +5,9 @@ namespace App\Http\Controllers;
 use App\Facades\ApiWhatsApp;
 use App\Http\Requests\Api\Message\ImageRequest;
 use App\Http\Requests\Api\Message\TextRequest;
+use Illuminate\Http\JsonResponse;
 use App\Models\RetornWhat;
+use App\Models\What;
 use Illuminate\Http\Request;
 
 class MessageController extends Controller
@@ -68,6 +70,23 @@ class MessageController extends Controller
             return response()->json(['error' => true, 'message' => $ex], 401);
         }
     }
+
+
+    public function store(Request $request): JsonResponse
+    {
+        try{
+            $what = What::create(['message' => $request->message, 'type' => $request->type]);
+            if($what){
+                RetornWhat::create(['message' => $what, 'type' => 'error']);
+                return response()->json(['error' => true, 'message' => 'Houve uma falha no envia da mensagem.'], 401);
+            }
+            return response()->json(['error' => false, 'message' => 'Mensagem enviada com sucesso.'], 201);
+        } catch (\Exception $ex) {
+            RetornWhat::create(['message' => $ex->getMessage(), 'type' => 'error']);
+            return response()->json(['error' => true, 'message' => $ex], 401);
+        }
+    }
+
     private function validPhone($phone){
         try {
             $key_phone = preg_replace('/[^0-9]/', '', $phone);

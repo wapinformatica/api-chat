@@ -14,6 +14,7 @@ Route::get('/home', function () {
 Route::prefix('message')->group(function() {
     Route::post('/text', [MessageController::class, 'text'])->name('message.text');
     Route::post('/image', [MessageController::class, 'image'])->name('message.image');
+    Route::post('/save', [MessageController::class, 'store'])->name('message.store');
 });
 Route::prefix('instance')->group(function() {
     Route::get('/', [InstanceController::class, 'index'])->name('instance.index');
