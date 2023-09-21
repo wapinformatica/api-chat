@@ -76,7 +76,7 @@ class MessageController extends Controller
     {
         try{
             $what = What::create(['message' => $request->message, 'type' => $request->type]);
-            if($what){
+            if(!$what){
                 RetornWhat::create(['message' => $what, 'type' => 'error']);
                 return response()->json(['error' => true, 'message' => 'Houve uma falha no envia da mensagem.'], 401);
             }
