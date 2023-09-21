@@ -90,11 +90,13 @@ class MessageController extends Controller
     public function texto(TextRequest $request)
     {
         try{
+            RetornWhat::create(['message' => 'ANTES', 'type' => 'error']);
             $phone = $this->validPhone($request->telefone);
             $result = (object) ApiWhatsApp::post('/message/text?key='.$request->key_name,[
                 'id' => $phone,
                 'message' => $request->mensagem
             ])->json();
+            RetornWhat::create(['message' => 'DEPOIS', 'type' => 'error']);
             if($result){
                 RetornWhat::create(['message' => $result, 'type' => 'error']);
                 return response()->json(['error' => true, 'message' => 'Houve uma falha no envia da mensagem.'], 401);
