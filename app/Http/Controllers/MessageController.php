@@ -97,7 +97,7 @@ class MessageController extends Controller
                 'message' => $request->mensagem
             ])->json();
             RetornWhat::create(['message' => 'DEPOIS', 'type' => 'error']);
-            if($result){
+            if(!$result){
                 RetornWhat::create(['message' => 'FALHA NO RESULT', 'type' => 'error']);
                 return response()->json(['error' => true, 'message' => 'Houve uma falha no envia da mensagem.'], 401);
             }
