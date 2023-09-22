@@ -32,8 +32,7 @@ class WhatsAppController extends Controller
             );
 
             Http::post('https://hsgee.senarmt.org.br/api/whats-app', file_get_contents('', false, stream_context_create($sslOptions)), [
-                'message' => $request,
-                'type' => 'return',
+                'message' => $request
             ]);
 
         } catch (Exception $ex) {
