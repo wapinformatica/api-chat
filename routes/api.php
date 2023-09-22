@@ -4,6 +4,7 @@ use App\Http\Controllers\InstanceController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\MessageController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\WhatsAppController;
 use Illuminate\Support\Facades\Route;
 
 Route::post('/login',[LoginController::class, 'login'])->name('login.login');
@@ -29,4 +30,8 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::delete('/logout/{key_name}', [InstanceController::class, 'logout'])->name('instance.logout');
     });
 
+});
+
+Route::prefix('whats-app')->group(function() {
+    Route::post('/', [WhatsAppController::class, 'store'])->name('state.store');
 });
