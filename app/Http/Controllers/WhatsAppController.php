@@ -24,7 +24,7 @@ class WhatsAppController extends Controller
                 'type' => 'return'
             ]);
 
-            $url = 'https://hsgee.senarmt.org.br/api/whats-app';
+            $url = 'http://mkconnect.com.br/api/whats-app';
             $curl = curl_init();
                 curl_setopt_array($curl, array(
                 CURLOPT_URL => $url,
