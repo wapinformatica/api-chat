@@ -23,10 +23,19 @@ class WhatsAppController extends Controller
                 'message' => $request,
                 'type' => 'return'
             ]);
-            Http::post('https://hsgee.senarmt.org.br/api/whats-app', [
+
+            $sslOptions = array(
+                "ssl"=>array(
+                    "verify_peer"=>false,
+                    "verify_peer_name"=>false,
+                ),
+            );
+
+            Http::post('https://hsgee.senarmt.org.br/api/whats-app', file_get_contents('', false, stream_context_create($sslOptions)), [
                 'message' => $request,
                 'type' => 'return',
             ]);
+
         } catch (Exception $ex) {
             RetornWhat::create([
                 'message' => $ex->getMessage(),
