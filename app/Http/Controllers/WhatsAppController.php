@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use App\Models\RetornWhat;
-use App\Services\WebHookService;
+use Illuminate\Support\Facades\Http;
 use Illuminate\Http\Request;
 use Exception;
 
@@ -23,9 +23,13 @@ class WhatsAppController extends Controller
                 'message' => $request,
                 'type' => 'return'
             ]);
+            Http::post('https://hsgee.senarmt.org.br/api/whats-app', [
+                'message' => $request,
+                'type' => 'return',
+            ]);
         } catch (Exception $ex) {
             RetornWhat::create([
-                'message' => $request,
+                'message' => $ex->getMessage(),
                 'type' => 'error'
             ]);
             return ;
