@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Facades\ApiWhatsApp;
+use App\Http\Requests\Api\Message\FileRequest;
 use App\Http\Requests\Api\Message\ImageRequest;
 use App\Http\Requests\Api\Message\TextRequest;
 use Illuminate\Http\JsonResponse;
@@ -50,27 +51,47 @@ class MessageController extends Controller
         }
     }
 
-    public function image(ImageRequest $request)
+    public function image(FileRequest $request)
     {
         try{
             $name_img = 'q9OpernOGte8u8NoGT9QpLXxKBF16UmcaCHpNKHd.png';
-            $initInstance = (object) ApiWhatsApp::attach('file',  file_get_contents($request->image) , $name_img)
+            $initInstance = (object) ApiWhatsApp::attach('file',  file_get_contents($request->file) , $name_img)
             ->post('/message/image?key='.$request->key_name,[
                 'id' => $this->validPhone($request->phone),
                 'caption' => $request->message
             ])->json();
             $result =  $initInstance->error ?? true;
             if($result){
-                RetornWhat::create(['message' => $initInstance, 'type' => 'error']);
-                return response()->json(['error' => true, 'message' => 'Houve uma falha no envia da mensagem.'], 401);
+                RetornWhat::create(['message' => $initInstance->message, 'type' => 'error']);
+                return response()->json(['error' => true, 'message' => 'Houve uma falha no envia da mensagem. ' .$initInstance->message], 401);
             }
             return response()->json(['error' => false, 'message' => 'Mensagem enviada com sucesso.'], 201);
         } catch (\Exception $ex) {
             RetornWhat::create(['message' => $ex->getMessage(), 'type' => 'error']);
-            return response()->json(['error' => true, 'message' => $ex], 401);
+            return response()->json(['error' => true, 'message' => $ex->getMessage()], 401);
         }
     }
 
+    public function fileUrl(FileRequest $request)
+    {
+        try{
+            $name_img = 'q9OpernOGte8u8NoGT9QpLXxKBF16UmcaCHpNKHd.png';
+            $initInstance = (object) ApiWhatsApp::attach('file',  file_get_contents($request->file) , $name_img)
+            ->post('/message/image?key='.$request->key_name,[
+                'id' => $this->validPhone($request->phone),
+                'caption' => $request->message
+            ])->json();
+            $result =  $initInstance->error ?? true;
+            if($result){
+                RetornWhat::create(['message' => $initInstance->message, 'type' => 'error']);
+                return response()->json(['error' => true, 'message' => 'Houve uma falha no envia da mensagem. ' .$initInstance->message], 401);
+            }
+            return response()->json(['error' => false, 'message' => 'Mensagem enviada com sucesso.'], 201);
+        } catch (\Exception $ex) {
+            RetornWhat::create(['message' => $ex->getMessage(), 'type' => 'error']);
+            return response()->json(['error' => true, 'message' => $ex->getMessage()], 401);
+        }
+    }
 
     public function store(Request $request): JsonResponse
     {
@@ -83,7 +104,7 @@ class MessageController extends Controller
             return response()->json(['error' => false, 'message' => 'Mensagem enviada com sucesso.'], 201);
         } catch (\Exception $ex) {
             RetornWhat::create(['message' => $ex->getMessage(), 'type' => 'error']);
-            return response()->json(['error' => true, 'message' => $ex], 401);
+            return response()->json(['error' => true, 'message' => $ex->getMessage()], 401);
         }
     }
 
@@ -91,18 +112,19 @@ class MessageController extends Controller
     {
         try{
             $phone = $this->validPhone($request->phone);
-            $result = ApiWhatsApp::post('/message/text?key='.$request->key_name,[
+            $initInstance = ApiWhatsApp::post('/message/text?key='.$request->key_name,[
                 'id' => $phone,
                 'message' => $request->message
             ])->json();
-            if(!$result){
+            $result =  $initInstance['error'] ?? true;
+            if($result){
                 RetornWhat::create(['message' => 'FALHA ' . $request, 'type' => 'error']);
                 return response()->json(['error' => true, 'message' => 'Houve uma falha no envia da mensagem.'], 401);
             }
             return response()->json(['error' => false, 'message' => 'Mensagem enviada com sucesso.'], 201);
         } catch (\Exception $ex) {
             RetornWhat::create(['message' => $ex->getMessage(), 'type' => 'error']);
-            return response()->json(['error' => true, 'message' => $ex], 401);
+            return response()->json(['error' => true, 'message' => $ex->getMessage()], 401);
         }
     }
 
