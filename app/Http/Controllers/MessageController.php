@@ -12,7 +12,7 @@ use Illuminate\Http\Request;
 
 class MessageController extends Controller
 {
-    public function text(TextRequest $request)
+    public function texto(TextRequest $request)
     {
         try{
             $array = '{
@@ -87,7 +87,7 @@ class MessageController extends Controller
         }
     }
 
-    public function texto(TextRequest $request)
+    public function text(TextRequest $request)
     {
         try{
             $phone = $this->validPhone($request->phone);
