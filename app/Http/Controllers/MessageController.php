@@ -16,8 +16,8 @@ class MessageController extends Controller
     {
         try{
             $array = '{
-                "id" :  "' . $this->validPhone($request->telefone) . '",
-                "message": "' . $request->mensagem . '"
+                "id" :  "' . $this->validPhone($request->phone) . '",
+                "message": "' . $request->message . '"
             }';
             $url = env('URL_WHATSAPP').'/message/text?key='.$request->key_name;
             $curl = curl_init();
@@ -54,10 +54,10 @@ class MessageController extends Controller
     {
         try{
             $name_img = 'q9OpernOGte8u8NoGT9QpLXxKBF16UmcaCHpNKHd.png';
-            $initInstance = (object) ApiWhatsApp::attach('file',  file_get_contents($request->imagem) , $name_img)
+            $initInstance = (object) ApiWhatsApp::attach('file',  file_get_contents($request->image) , $name_img)
             ->post('/message/image?key='.$request->key_name,[
-                'id' => $this->validPhone($request->telefone),
-                'caption' => $request->mensagem
+                'id' => $this->validPhone($request->phone),
+                'caption' => $request->message
             ])->json();
             $result =  $initInstance->error ?? true;
             if($result){
@@ -90,10 +90,10 @@ class MessageController extends Controller
     public function texto(TextRequest $request)
     {
         try{
-            $phone = $this->validPhone($request->telefone);
+            $phone = $this->validPhone($request->phone);
             $result = ApiWhatsApp::post('/message/text?key='.$request->key_name,[
                 'id' => $phone,
-                'message' => $request->mensagem
+                'message' => $request->message
             ])->json();
             if(!$result){
                 RetornWhat::create(['message' => 'FALHA ' . $request, 'type' => 'error']);

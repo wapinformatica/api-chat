@@ -27,8 +27,8 @@ class TextRequest extends FormRequest
     public function rules(Request $request)
     {
         return [
-            'telefone' => 'required|min:8',
-            'mensagem' => 'required',
+            'phone' => 'required|min:8',
+            'message' => 'required',
             'key_name' => 'required',
         ];
     }
@@ -36,9 +36,9 @@ class TextRequest extends FormRequest
     public function messages()
     {
         return [
-            'telefone.required' => 'O campo Telefone é obrigatório.',
-            'telefone.min' => 'O campo Senha deve ter no minímo 8 caracteres.',
-            'mensagem.required' => 'O campo Mensagem é obrigatório.',
+            'phone.required' => 'O campo Telefone é obrigatório.',
+            'phone.min' => 'O campo Senha deve ter no minímo 8 caracteres.',
+            'message.required' => 'O campo Mensagem é obrigatório.',
             'key_name.required' => 'O campo Chave Key é obrigatório.',
         ];
     }

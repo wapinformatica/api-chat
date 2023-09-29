@@ -27,8 +27,8 @@ class ImageRequest extends FormRequest
     public function rules(Request $request)
     {
         return [
-            'telefone' => 'required|min:8',
-            'imagem' => 'required',
+            'phone' => 'required|min:8',
+            'image' => 'required',
             'key_name' => 'required',
         ];
     }
@@ -36,9 +36,9 @@ class ImageRequest extends FormRequest
     public function messages()
     {
         return [
-            'imagem.required' => 'Obrigatório informar uma Imagem',
-            'telefone.required' => 'O campo Telefone é obrigatório.',
-            'telefone.min' => 'O campo Senha deve ter no minímo 8 caracteres.',
+            'image.required' => 'Obrigatório informar uma Imagem',
+            'phone.required' => 'O campo Telefone é obrigatório.',
+            'phone.min' => 'O campo Senha deve ter no minímo 8 caracteres.',
             'key_name.required' => 'O campo Chave Key é obrigatório.',
         ];
     }
