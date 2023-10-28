@@ -17,7 +17,7 @@ class CredenciamentoController extends Controller
     public function ateg() : JsonResponse
     {
         try{
-            $json = file_get_contents(storage_path('app/ateg.json'));
+            $json = file_get_contents('ateg.json');
             return response()->json([
                 'error' => false,
                 'data' => $json
@@ -30,7 +30,7 @@ class CredenciamentoController extends Controller
     public function instructor() : JsonResponse
     {
         try{
-            $json = file_get_contents(storage_path('app/instructor.json'));
+            $json = file_get_contents('instructor.json');
             return response()->json([
                 'error' => false,
                 'data' => $json
