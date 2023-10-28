@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Facades\ApiWhatsApp;
+use App\Http\Requests\Api\Message\DocRequest;
 use App\Http\Requests\Api\Message\FileRequest;
 use App\Http\Requests\Api\Message\ImageRequest;
 use App\Http\Requests\Api\Message\TextRequest;
@@ -80,6 +81,31 @@ class MessageController extends Controller
             ->post('/message/image?key='.$request->key_name,[
                 'id' => $this->validPhone($request->phone),
                 'caption' => $request->message
+            ])->json();
+            $result =  $initInstance->error ?? true;
+            if($result){
+                RetornWhat::create(['message' => $initInstance->message, 'type' => 'error']);
+                return response()->json(['error' => true, 'message' => 'Houve uma falha no envia da mensagem. ' .$initInstance->message], 401);
+            }
+            return response()->json(['error' => false, 'message' => 'Mensagem enviada com sucesso.'], 201);
+        } catch (\Exception $ex) {
+            RetornWhat::create(['message' => $ex->getMessage(), 'type' => 'error']);
+            return response()->json(['error' => true, 'message' => $ex->getMessage()], 401);
+        }
+    }
+
+    public function file(DocRequest $request)
+    {
+        try{
+            $filename = $request->filename;
+            if($request->filename == ''){
+                $filename = 'arquivo';
+            }
+            $name_extension = 'q9OpernOGte8u8NoGT9QpLXxKBF16UmcaCHpNKHd.'.$request->extension;
+            $initInstance = (object) ApiWhatsApp::attach('file',  file_get_contents($request->file) , $name_extension)
+            ->post('/message/doc?key='.$request->key_name,[
+                'id' => $this->validPhone($request->phone),
+                'filename' => $filename
             ])->json();
             $result =  $initInstance->error ?? true;
             if($result){
