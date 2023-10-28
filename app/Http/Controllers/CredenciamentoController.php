@@ -17,7 +17,7 @@ class CredenciamentoController extends Controller
     public function ateg() : JsonResponse
     {
         try{
-            $json = file_get_contents('ategs.json');
+            $json = file_get_contents('ateg.json');
             return response()->json([
                 'error' => false,
                 'data' => $json
