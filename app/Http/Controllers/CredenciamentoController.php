@@ -39,4 +39,18 @@ class CredenciamentoController extends Controller
             return response()->json(['error' => true, 'message' => $ex->getMessage()], 401);
         }
     }
+
+    public function ategs() : JsonResponse
+    {
+        try{
+            $json = file_get_contents('ategs.json');
+            return response()->json([
+                'error' => false,
+                'data' => $json
+            ], 200);
+        } catch (\Exception $ex) {
+            return response()->json(['error' => true, 'message' => $ex->getMessage()], 401);
+        }
+    }
+
 }

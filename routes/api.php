@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Route;
 Route::post('/login',[LoginController::class, 'login'])->name('login.login');
 Route::get('/instrutor',[CredenciamentoController::class, 'instructor'])->name('instructor.show');
 Route::get('/ateg',[CredenciamentoController::class, 'ateg'])->name('ateg.show');
+Route::get('/ategs',[CredenciamentoController::class, 'ategs'])->name('ategs.show');
 Route::get('/home', function () {
     return view('welcome');
 });
