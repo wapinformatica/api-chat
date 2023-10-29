@@ -18,9 +18,10 @@ class CredenciamentoController extends Controller
     {
         try{
             $json = file_get_contents('ateg.json');
+            $data = json_decode($json, true);
             return response()->json([
                 'error' => false,
-                'data' => $json
+                'data' => $data
             ], 200);
         } catch (\Exception $ex) {
             return response()->json(['error' => true, 'message' => $ex->getMessage()], 401);
