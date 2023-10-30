@@ -43,4 +43,3 @@ Route::middleware('auth:sanctum')->group(function () {
 Route::prefix('whats-app')->group(function() {
     Route::post('/', [WhatsAppController::class, 'store'])->name('state.store');
 });
-

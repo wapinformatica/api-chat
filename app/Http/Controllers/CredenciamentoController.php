@@ -10,6 +10,7 @@ use App\Repositories\WhatsappClientRepository;
 use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class CredenciamentoController extends Controller
 {
@@ -31,10 +32,10 @@ class CredenciamentoController extends Controller
     public function instructor() : JsonResponse
     {
         try{
-            $json = file_get_contents('instructor.json');
+            $data =  DB::select("SELECT id, nome, rg, cpf, endereco, complemento, bairro, cep, estado, cidade, telefone, celular, e_mail, data_nascimento, senha, situacao FROM t_formulario_credenciamento");
             return response()->json([
                 'error' => false,
-                'data' => $json
+                'data' => $data
             ], 200);
         } catch (\Exception $ex) {
             return response()->json(['error' => true, 'message' => $ex->getMessage()], 401);
