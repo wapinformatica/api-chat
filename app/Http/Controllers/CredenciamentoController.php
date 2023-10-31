@@ -32,7 +32,7 @@ class CredenciamentoController extends Controller
     public function instructor() : JsonResponse
     {
         try{
-            $data =  DB::select("SELECT id, nome, rg, cpf, endereco, complemento, bairro, cep, estado, cidade, telefone, celular, e_mail, data_nascimento, senha, situacao FROM t_formulario_credenciamento WHERE e_mail <> 'sample@email.tst' ");
+            $data =  DB::select("SELECT id, nome, rg, cpf, endereco, complemento, bairro, cep, estado, cidade, telefone, celular, e_mail, data_nascimento, senha, situacao, data_criacao FROM t_formulario_credenciamento WHERE e_mail <> 'sample@email.tst' ");
             return response()->json([
                 'error' => false,
                 'data' => $data
