@@ -18,8 +18,13 @@ class CredenciamentoController extends Controller
     public function ateg() : JsonResponse
     {
         try{
-            $json = file_get_contents('ateg.json');
-            $data = json_decode($json, true);
+            // $json = file_get_contents('ateg.json');
+            // $data = json_decode($json, true);
+            // return response()->json([
+            //     'error' => false,
+            //     'data' => $data
+            // ], 200);
+            $data =  DB::select("SELECT codCandidato, nome, rg, cpf, endereco, complemento, bairro, cep, estado, cidade, telefone, celular, email, dataNascimento, senha, situacao, dataCriacao FROM credenciamentoAteg ");
             return response()->json([
                 'error' => false,
                 'data' => $data
