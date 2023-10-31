@@ -24,7 +24,7 @@ class CredenciamentoController extends Controller
             //     'error' => false,
             //     'data' => $data
             // ], 200);
-            $data =  DB::select("SELECT codCandidato, nome, rg, cpf, endereco, complemento, bairro, cep, estado, cidade, telefone, celular, email, dataNascimento, senha, situacao, dataCriacao FROM credenciamentoAteg ");
+            $data =  DB::select("SELECT codCandidato, nome, rg, cpf, endereco, complemento, bairro, cep, estado, cidade, telefone, celular, email, dataNascimento, senha, situacao, tecnico, supervisor, dataCriacao FROM credenciamentoAteg ");
             return response()->json([
                 'error' => false,
                 'data' => $data
